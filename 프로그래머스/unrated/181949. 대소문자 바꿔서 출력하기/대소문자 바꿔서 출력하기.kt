@@ -6,4 +6,8 @@ fun main(args: Array<String>) {
         else s2 +=c.lowercase()
     }
     println(s2)
+
+    // s1.map { if (it.isLowerCase()) it.uppercase() else it.lowercase() }
+    //     .joinToString("")
+    //     .also { println(it) }
 }
