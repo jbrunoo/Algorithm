@@ -5,5 +5,7 @@ class Solution {
         val sum_ba = (b.toString() + a.toString()).toInt()
         answer = if(sum_ab <= sum_ba) sum_ba else sum_ab
         return answer
+        
+        // "$a$b".toInt() "$b$a".toInt()
     }
 }
