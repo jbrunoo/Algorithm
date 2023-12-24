@@ -4,5 +4,9 @@ class Solution {
         answer = my_string.substring(0, s) + overwrite_string
         if(answer.length == my_string.length) return answer
         else return answer + my_string.substring(answer.length)
+        
+        // replaceRange
+        // answer = my_string.replaceRange(s, s + overwrite_string.length, overwrite_string)
+        // return answer
     }
 }
