@@ -1,14 +1,9 @@
 class Solution {
     fun solution(numLog: IntArray): String {
         var answer: String = ""
+        val log = mapOf(1 to 'w', -1 to 's', 10 to 'd', -10 to 'a')
         for(i in 1 until numLog.size) {
-            val log = numLog[i] - numLog[i - 1]
-            when(log) {
-                1 -> answer += 'w'
-                -1 -> answer += 's'
-                10 -> answer += 'd'
-                -10 -> answer += 'a'
-            }
+            answer += log[numLog[i] - numLog[i - 1]]
         }
         return answer
     }
