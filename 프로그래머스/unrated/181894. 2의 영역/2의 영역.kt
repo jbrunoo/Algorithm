@@ -3,9 +3,7 @@ class Solution {
         var answer: IntArray = intArrayOf()
         for(i in arr.indices) {
             if(arr[i] == 2) answer += i
-        }
-        if(answer.isEmpty()) answer += -1 
-        else answer = arr.slice(answer.first()..answer.last()).toIntArray() 
-        return answer
+        } // arr.contains(2)
+        return if(answer.isEmpty()) intArrayOf(-1) else arr.slice(answer.first()..answer.last()).toIntArray()
     }
 }
