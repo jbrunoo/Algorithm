@@ -4,4 +4,5 @@ class Solution {
         val (c, d) = intervals.last()
         return (arr.slice(a..b) + arr.slice(c..d)).toIntArray()
     }
+    // flatMap
 }
