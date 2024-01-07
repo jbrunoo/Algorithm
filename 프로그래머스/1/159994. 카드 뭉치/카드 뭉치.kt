@@ -11,6 +11,7 @@ class Solution {
         for (i in cards2.size - 1 downTo 0) {
             stack2.push(cards2[i])
         }
+        // 또는 val idx1, idx2로 idx++해서 idx1, 2 < cards1, 2.size로 검사
         for(s in goal) {
             if(stack1.isNotEmpty() && s == stack1.peek()) stack1.pop()
             else if(stack2.isNotEmpty() && s == stack2.peek()) stack2.pop()
