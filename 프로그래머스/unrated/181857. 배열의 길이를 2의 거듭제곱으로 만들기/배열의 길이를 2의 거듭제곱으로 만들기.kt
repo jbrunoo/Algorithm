@@ -7,5 +7,9 @@ class Solution {
             if(answer.size > n) n *= 2
         }
         return answer
+        
+        // var n = 1
+        // while(arr.size > n) n *= 2
+        // return arr + IntArray(n - arr.size) { 0 }
     }
 }
