@@ -6,5 +6,6 @@ class Solution {
             else answer += 4500
         }
         return answer
+        // return order.map { if(it.contains("cafelatte")) 5000 else 4500 }.sum()
     }
 }
