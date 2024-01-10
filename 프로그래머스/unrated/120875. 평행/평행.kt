@@ -1,4 +1,3 @@
-import kotlin.math.abs
 class Solution {
     fun solution(dots: Array<IntArray>): Int {
         // 01 02 03 12 13 23
@@ -11,5 +10,7 @@ class Solution {
             }
         }
         return 0
+        // ab ac ad 경우만 계산해도 됐음. 01 02 03
+        // dots indexed로 i, v 이용하면 더 깔끔하지 않을지
     }
 }
