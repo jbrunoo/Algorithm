@@ -1,8 +1,9 @@
 // list에서 2번째로 큰 값 찾기
-// max, secondMax 초기화
+// max, secondMax Int.MIN_VALUE 초기화
 // list 순회하면서 value와 max 비교
 // value > max -> secondMax = max, max = value (max 값을 먼저 할당하지 않도록 주의)
 // secondMax < value < max -> secondMax = value
+// secondMax 변화 없을 시(list size < 2, 요소가 중복 값일 때 등) 에러 throw
 
 fun main() {
     val list = listOf(5, 1, 52, 57, 13, 53)
