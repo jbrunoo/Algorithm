@@ -1,24 +1,37 @@
-fun main() = with(System.`in`.bufferedReader()){
-    val (n, m) = readLine().split(" ").map { it.toInt() }
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.util.*
 
-    val A = Array(n) { BooleanArray(m) }
-    val B = Array(n) { BooleanArray(m) }
+var n = 0
+var m = 0
+lateinit var A: Array<BooleanArray>
+lateinit var B: Array<BooleanArray>
 
-    for (i in 0 until n) {
-        val row = readLine().chunked(1).map { it.toInt() }
-        for (j in 0 until m) {
-            A[i][j] = row[j] == 1
-        }
-    }
-
-    for (i in 0 until n) {
-        val row = readLine().chunked(1).map { it.toInt() }
-        for (j in 0 until m) {
-            B[i][j] = row[j] == 1
-        }
-    }
-
+fun main() {
+    init()
     println(compare(A, B))
+}
+
+fun init() = with(BufferedReader(InputStreamReader(System.`in`))) {
+    with(StringTokenizer(readLine())) {
+        n = nextToken().toInt()
+        m = nextToken().toInt()
+    }
+    A = Array(n) { _ ->
+        with(readLine()) {
+            BooleanArray(m) {
+                this[it] != '0'
+            }
+        }
+    }
+    B = Array(n) { _ ->
+        with(readLine()) {
+            BooleanArray(m) {
+                this[it] != '0'
+            }
+        }
+    }
+    close()
 }
 
 fun compare(A: Array<BooleanArray>, B: Array<BooleanArray>): Int {
