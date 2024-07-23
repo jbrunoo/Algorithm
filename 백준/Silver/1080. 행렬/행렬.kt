@@ -45,11 +45,10 @@ fun compare(A: Array<BooleanArray>, B: Array<BooleanArray>): Int {
             if(A[col][row] != B[col][row]) {
                 reverse(A, col, row)
                 cnt += 1
-                if(A.contentDeepEquals(B)) return cnt
             }
         }
     }
-    return -1
+    return if(A.contentDeepEquals(B)) cnt else -1
 }
 
 
