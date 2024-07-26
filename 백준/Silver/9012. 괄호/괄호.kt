@@ -6,23 +6,23 @@ fun main() = with(System.`in`.bufferedReader()) {
 
     repeat(n) {
         val s = readLine()
-        sb.appendLine(vps(s))
+        sb.appendLine(if(vps(s)) "YES" else "NO" )
     }
 
     print(sb)
 }
 
-fun vps(s: String): String {
-    val st = ArrayList<Char>()
+fun vps(s: String): Boolean {
+    var cnt = 0
 
     for(c in s) {
         if(c == '(') {
-            st.add(0, c)
+            cnt++
         } else {
-            if(st.isEmpty()) return "NO"
-            else if(st.last() == '(') st.removeLast()
+            if(cnt == 0) return false
+            else cnt--
         }
     }
 
-    return if(st.isEmpty()) "YES" else "NO"
+    return cnt == 0
 }
