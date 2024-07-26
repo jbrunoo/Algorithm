@@ -2,13 +2,16 @@ var cnt = 0
 
 fun main() = with(System.`in`.bufferedReader()) {
     val n = readLine().toInt()
+    val sb = StringBuilder()
 
     repeat(n) {
         val s = readLine()
         val result = isPalindrome(s)
-        println("${result.first} ${result.second}")
+        sb.appendLine("${result.first} ${result.second}")
         cnt = 0
     }
+
+    print(sb)
 }
 
 fun recursion(s: String, l: Int, r: Int): Pair<Int, Int> {
