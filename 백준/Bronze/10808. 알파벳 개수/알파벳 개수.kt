@@ -6,5 +6,7 @@ fun main() = with(System.`in`.bufferedReader()) {
        arr[c.code - 97]++
     }
 
-    println(arr.joinToString(" "))
+    for(i in arr) {
+        print("$i ")
+    }
 }
