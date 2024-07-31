@@ -7,10 +7,22 @@ fun main() = with(System.`in`.bufferedReader()) {
     val arr = IntArray(n) { st.nextToken().toInt() }
     var result = 0
 
-    for(i in 0 until arr.size - 1) {
-        for(j in i + 1 until arr.size) {
-            if(arr[i] + arr[j] == m) result++
+    var l = 0
+    var r = 1
+    arr.sort()
+    while(r < arr.size) {
+        if(arr[l] + arr[r] == m) {
+            result++
+            l++
+            r = l + 1
+            continue
         }
+        if(r == arr.size - 1) {
+            l++
+            r = l + 1
+            continue
+        }
+        r++
     }
 
     println(result)
