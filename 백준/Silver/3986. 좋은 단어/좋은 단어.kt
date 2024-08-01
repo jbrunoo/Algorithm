@@ -7,9 +7,9 @@ fun main() = with(System.`in`.bufferedReader()) {
         val stack = ArrayList<Char>()
 
         for(c in s) {
-            if(stack.isEmpty()) stack.add(0, c)
-            else if(stack.first() == c) stack.removeFirst()
-            else stack.add(0, c)
+            if(stack.isEmpty()) stack.add(c)
+            else if(stack.last() == c) stack.removeLast()
+            else stack.add(c)
         }
 
         if(stack.isEmpty()) result++
