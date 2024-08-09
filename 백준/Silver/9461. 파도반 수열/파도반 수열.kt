@@ -1,4 +1,4 @@
-val dp = Array<Long>(101) { 0 }
+val dp = LongArray(101)
 var start = 4
 
 fun main() = with(System.`in`.bufferedReader()) {
