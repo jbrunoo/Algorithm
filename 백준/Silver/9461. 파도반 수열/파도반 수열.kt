@@ -2,18 +2,19 @@ val dp = LongArray(101)
 var start = 4
 
 fun main() = with(System.`in`.bufferedReader()) {
-    dp[0] = -1
     dp[1] = 1
     dp[2] = 1
     dp[3] = 1
 
     val n1 = readLine().toInt()
+    val sb = StringBuilder()
 
     repeat(n1) {
         val n2 = readLine().toInt()
-        println(pado(n2))
+        sb.appendLine(pado(n2))
     }
 
+    println(sb)
 }
 
 fun pado(n: Int): Long {
