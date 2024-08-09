@@ -14,7 +14,7 @@ fun main() = with(System.`in`.bufferedReader()) {
         val a = st.nextToken().toInt()
         val b = st.nextToken().toInt()
         val c = st.nextToken().toInt()
-        
+
         val result = w(a, b, c)
         sb.appendLine("w($a, $b, $c) = $result")
     }
@@ -26,17 +26,10 @@ fun w(a: Int, b: Int, c: Int): Int {
     if (a > 20 || b > 20 || c > 20) return w(20, 20, 20)
     if (wArr[a][b][c] != 0) return wArr[a][b][c]
 
-    for (i in a downTo 1) {
-        for (j in b downTo 1) {
-            for (k in c downTo 1) {
-                if (i < j && j < k) wArr[i][j][k] =
-                    w(i, j, k - 1) + w(i, j - 1, k - 1) - w(i, j - 1, k)
-                else wArr[i][j][k] =
-                    w(i - 1, j, k) + w(i - 1, j - 1, k) + w(i - 1, j, k - 1) - w(i - 1, j - 1, k - 1)
-            }
-        }
-    }
+    if (a < b && b < c) wArr[a][b][c] =
+        w(a, b, c - 1) + w(a, b - 1, c - 1) - w(a, b - 1, c)
+    else wArr[a][b][c] =
+        w(a - 1, b, c) + w(a - 1, b - 1, c) + w(a - 1, b, c - 1) - w(a - 1, b - 1, c - 1)
 
     return wArr[a][b][c]
-
 }
