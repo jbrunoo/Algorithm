@@ -1,0 +1,1 @@
+fun main(){val n=readln().toLong();println(if(n%2==0L)n*(n/2-1)+n/2 else n*(n/2));print("2")}
