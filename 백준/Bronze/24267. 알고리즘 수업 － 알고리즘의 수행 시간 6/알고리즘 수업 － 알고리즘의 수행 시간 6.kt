@@ -1,0 +1,1 @@
+fun main(){val n=readln().toLong();var t=0L;var s=0L;for(i in 1..n-2){t+=i;s+=t};print("$s\n3")}
