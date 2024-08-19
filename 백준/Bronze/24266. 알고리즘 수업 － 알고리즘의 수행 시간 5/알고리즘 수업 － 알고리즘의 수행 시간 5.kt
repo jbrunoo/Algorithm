@@ -1,0 +1,1 @@
+fun main()=readln().toLong().let{print("${it*it*it}\n3")}
