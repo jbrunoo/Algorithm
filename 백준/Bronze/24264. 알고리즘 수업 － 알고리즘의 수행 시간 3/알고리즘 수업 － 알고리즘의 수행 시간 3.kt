@@ -1,0 +1,1 @@
+fun main(){println(readln().toBigInteger().pow(2));print("2")}
