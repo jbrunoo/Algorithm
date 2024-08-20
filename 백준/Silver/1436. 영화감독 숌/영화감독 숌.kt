@@ -1,19 +1,22 @@
 fun main() = with(System.`in`.bufferedReader()) {
     val n = readLine().toInt()
-    val arr = IntArray(10001)
-    arr[1] = 666
-    var num = 1666
     var cnt = 1
+    var num = 666
 
     while(true) {
-        if(n == cnt) {
-            print(arr[n])
+        if(cnt == n) {
+            print(num)
             break
         }
-        if("666" in num.toString()) {
-            cnt++
-            arr[cnt] = num
-        }
         num++
+        var tmp = num
+        while(tmp >= 666) {
+            if(tmp % 1000 == 666) {
+                cnt++
+                break
+            } else {
+                tmp /= 10
+            }
+        }
     }
 }
