@@ -10,12 +10,8 @@ fun main() = with(System.`in`.bufferedReader()) {
         }
     }
 
-    li.sortWith(
-        compareBy(
-            { it.first * it.first + it.second * it.second },
-            { it.first }
-        )
-    )
+    li.sortBy{ it.first }
+    li.sortBy{ it.first * it.first + it.second * it.second }
 
     while(true) {
         val st = StringTokenizer(readLine())
