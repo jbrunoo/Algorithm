@@ -1,29 +1,27 @@
 import java.util.*
 
-val arr = Array(31) { IntArray(31) }
-
 fun main() = with(System.`in`.bufferedReader()) {
     val t = readLine().toInt()
     val sb = StringBuilder()
 
-    for (i in 1..30) {
-        arr[1][i] = i
-        arr[i][i] = 1
-    }
-
     repeat(t) {
         val st = StringTokenizer(readLine())
+        val r = st.nextToken().toInt()
         val n = st.nextToken().toInt()
-        val m = st.nextToken().toInt()
 
-        sb.appendLine(dp(n, m))
+        sb.appendLine(combi(n, r))
     }
 
     print(sb)
 }
 
-fun dp(n: Int, m: Int): Int {
-    if (arr[n][m] != 0) return arr[n][m]
-    arr[n][m] = dp(n - 1,m - 1) + dp(n, m - 1)
-    return arr[n][m]
+fun combi(n: Int, r: Int): Int {
+    if (r == 0 || n == r) return 1
+
+    var result = 1
+    for (i in 1..r) {
+        result *= n - r + i
+        result /= i
+    }
+    return result
 }
