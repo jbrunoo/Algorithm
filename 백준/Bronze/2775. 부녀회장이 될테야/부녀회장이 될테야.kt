@@ -1,25 +1,26 @@
+val arr = Array(15) { IntArray(15) }
+
 fun main() = with(System.`in`.bufferedReader()) {
     val t = readLine().toInt()
-    val arr = Array(15) { IntArray(15) }
+    val sb = StringBuilder()
 
     for(i in 0..14) {
-        for(j in 1..14) {
-            if(i == 0) arr[i][j] = j
-            else {
-                var tmp = 0
-                for(k in 1..j) {
-                    tmp += arr[i-1][k]
-                }
-                arr[i][j] = tmp
-            }
-        }
+        arr[0][i] = i
+        arr[i][1] = 1
     }
 
     repeat(t) {
         val k = readLine().toInt()
         val n = readLine().toInt()
 
-        println(arr[k][n])
+        sb.appendLine(dp(k, n))
     }
+
+    print(sb)
 }
 
+fun dp(k: Int, n: Int): Int {
+    if(arr[k][n] != 0) return arr[k][n]
+    arr[k][n] = dp(k-1, n) + dp(k, n-1)
+    return arr[k][n]
+}
