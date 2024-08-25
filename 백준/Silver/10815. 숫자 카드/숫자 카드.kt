@@ -4,8 +4,8 @@ fun main() = with(System.`in`.bufferedReader()) {
     val n = readLine().toInt()
     val st1 = StringTokenizer(readLine())
 
-    val map = HashMap<Int, Int>()
-    for(i in 1..n) { map[st1.nextToken().toInt()] = 1 }
+    val set = HashSet<Int>()
+    for(i in 1..n) { set.add(st1.nextToken().toInt()) }
 
     val m = readLine().toInt()
     val st2 = StringTokenizer(readLine())
@@ -13,8 +13,8 @@ fun main() = with(System.`in`.bufferedReader()) {
     val sb = StringBuilder()
 
     for(i in 1..m) {
-        val ans = map[st2.nextToken().toInt()] ?: 0
-        sb.append(ans).append(" ")
+        val ans = set.contains(st2.nextToken().toInt())
+        sb.append(if(ans) 1 else 0).append(" ")
     }
 
     print(sb)
