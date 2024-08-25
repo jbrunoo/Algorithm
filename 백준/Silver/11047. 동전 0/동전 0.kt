@@ -9,11 +9,10 @@ fun main() = with(System.`in`.bufferedReader()) {
     var ans = 0
     var change = k
 
-    for(coin in arr.sortedDescending()) {
-        if(change >= coin) {
-            val tmp = change / coin
-            ans += tmp
-            change -= tmp * coin
+    for(i in n - 1 downTo 0) {
+        if(change >= arr[i]) {
+            ans += change / arr[i]
+            change %= arr[i]
         }
     }
 
