@@ -1,13 +1,10 @@
-fun main() = with(System.`in`.bufferedReader()) {
-    val (n, m) = readLine().split(" ").map { it.toInt() }
+fun main() = with(System.`in`.bufferedReader()){
+    val (_, m) = readLine().split(" ").map { it.toInt() }
     val (a, b) = readLine().split(" ").map { it.toInt() }
-    var ans = a
-
-    repeat(m) {
-        val k = readLine().toInt()
-        if (ans < k) {
-            ans = if (ans == a) b else a
-        }
+    val arr = intArrayOf(a, b)
+    var bool = true
+    repeat(m) { val k = readLine().toInt();
+        if (bool && arr[0] < k || !bool && arr[1] < k) bool = !bool
     }
-    print(ans)
-}   
+    print(if(bool) a else b)
+}
