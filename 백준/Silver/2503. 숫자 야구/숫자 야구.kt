@@ -2,37 +2,50 @@ import java.util.*
 
 fun main() = with(System.`in`.bufferedReader()) {
     val n = readLine().toInt()
-    val arr = IntArray(1000)
+    val arr = Array(n) { "" }
+    val strike = IntArray(n)
+    val ball = IntArray(n)
 
-    for (j in 1..n) {
+    for (j in 0 until n) {
         val st = StringTokenizer(readLine())
-        val nums = st.nextToken()
-        val s = st.nextToken().toInt()
-        val b = st.nextToken().toInt()
+        arr[j] = st.nextToken()
+        strike[j] = st.nextToken().toInt()
+        ball[j] = st.nextToken().toInt()
+    }
 
-        for (i in 1..9) {
-            for(j in 1..9) {
-                for (k in 1..9) {
-                    if(i == j || j == k || k == i) continue
-                    val ans = (i * 100 + j * 10 + k).toString()
-                    val (S, B) = compare(ans, nums)
-                    if(s == S && b == B) arr[ans.toInt()]++
+    print(count(n, arr, strike, ball))
+}
+
+fun count(n: Int, nums: Array<String>, strike: IntArray, ball: IntArray): Int {
+    var cnt = 0
+    for (i in 1..9) {
+        for (j in 1..9) {
+            for (k in 1..9) {
+                if (i == j || j == k || k == i) continue
+
+                var tmp = 0
+                for (idx in 0 until n) {
+                    val num = nums[idx]
+                    val s = strike[idx]
+                    val b = ball[idx]
+                    var S = 0
+                    var B = 0
+
+                    if (i == num[0] - '0') S++
+                    if (j == num[1] - '0') S++
+                    if (k == num[2] - '0') S++
+
+                    if (i == num[1] - '0' || i == num[2] - '0') B++
+                    if (j == num[0] - '0' || j == num[2] - '0') B++
+                    if (k == num[0] - '0' || k == num[1] - '0') B++
+
+                    if (s == S && b == B) tmp++
                 }
+                
+                if (tmp == n) cnt++
             }
         }
     }
 
-    print(arr.count { it == n })
-}
-
-fun compare(ans: String, guess: String): Pair<Int, Int> {
-    var s = 0
-    var b = 0
-
-    for (i in 0..2) {
-        if (ans[i] == guess[i]) s++
-        else if (ans[i] in guess) b++
-    }
-
-    return Pair(s, b)
+    return cnt
 }
