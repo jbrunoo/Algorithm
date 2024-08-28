@@ -8,16 +8,16 @@ fun main() = with(System.`in`.bufferedReader()) {
     arr.sort()
 
     var min = 32800000
-    val map = HashMap<Int, Int>()
-    map[min] = 1
+    var cnt = 0
+
     for(i in 0 until arr.size - 1) {
         val distance = arr[i + 1] - arr[i]
-        if(min == distance) map[min] = map[min]!! + 1
+        if(min == distance) cnt++
         if(min > distance) {
             min = distance
-            map[min] = 1
+            cnt = 1
         }
     }
 
-    print("$min ${map[min]}")
+    print("$min $cnt")
 }
