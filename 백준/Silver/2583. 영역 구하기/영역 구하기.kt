@@ -21,28 +21,25 @@ fun main() = with(System.`in`.bufferedReader()) {
         val c = st2.nextToken().toInt()
         val d = st2.nextToken().toInt()
 
-        for(i in a until c) {
-            for(j in b until d) {
-                arr[i][j] = 0
-            }
-        }
+        for(i in a until c) for(j in b until d) arr[i][j] = 0
     }
 
     var cnt = 0
     val sizes = mutableListOf<Int>()
 
-    for(i in 0 until n) {
-        for(j in 0 until m) {
+    for(i in 0 until n)
+        for(j in 0 until m)
             if(arr[i][j] == 1 && visited[i][j] == 0) {
                 cnt++
                 sizes.add(bfs(i, j))
             }
-        }
-    }
+
+    val sb = StringBuilder()
+    sizes.sort()
+    for(s in sizes) sb.append(s).append(" ")
 
     println(cnt)
-    print(sizes.sorted().joinToString(" "))
-
+    print(sb)
 }
 
 fun bfs(a: Int, b: Int): Int {
@@ -55,17 +52,18 @@ fun bfs(a: Int, b: Int): Int {
         size++
         val (x, y) = q.poll()
 
-        for(i in 0..3) {
+        for (i in 0..3) {
             val nx = x + dx[i]
             val ny = y + dy[i]
 
-            if(nx < 0 || ny < 0 || nx >= arr.size || ny >= arr[0].size) continue
-            if(arr[nx][ny] == 1 && visited[nx][ny] == 0) {
+            if (nx < 0 || ny < 0 || nx >= arr.size || ny >= arr[0].size) continue
+            if (arr[nx][ny] == 1 && visited[nx][ny] == 0) {
                 q.offer(Node(nx, ny))
                 visited[nx][ny] = visited[x][y] + 1
             }
         }
     }
+
 
     return size
 }
