@@ -22,12 +22,16 @@ fun main() = StreamTokenizer(System.`in`.bufferedReader()).run {
 fun solve(): Pair<Int, Int> {
     var time = 0
 
-    while(!arr.all { row -> row.all { it == 0 } }) {
+    while(true) {
         visited = Array(n) { BooleanArray(m) }
         leftCheese = mutableListOf()
         dfs(1, 0)
         for((x, y) in leftCheese) arr[x][y] = 0
         time++
+
+        var flag = true
+        for(i in 0 until n) for(j in 0 until m) if(arr[i][j] != 0) flag = false
+        if(flag) break
     }
 
     return Pair(time, leftCheese.size)
@@ -36,20 +40,17 @@ fun solve(): Pair<Int, Int> {
 
 fun dfs(x: Int, y: Int) {
     visited[x][y] = true
+    if(arr[x][y] == 1) {
+        leftCheese += Cheese(x, y)
+        return
+    }
 
     for(i in 0..3) {
         val nx = x + dx[i]
         val ny = y + dy[i]
 
-        if(nx < 0 || ny < 0 || nx >= arr.size || ny >= arr[0].size) continue
-        if(arr[nx][ny] == 1 && !visited[nx][ny]) {
-            visited[nx][ny] = true
-            leftCheese += Cheese(nx, ny)
-        }
-        if(arr[nx][ny] == 0 && !visited[nx][ny]) {
-            visited[nx][ny] = true
-            dfs(nx, ny)
-        }
+        if(nx < 0 || ny < 0 || nx >= n || ny >= m || visited[nx][ny]) continue
+        dfs(nx, ny)
     }
 }
 
