@@ -2,7 +2,7 @@ import java.util.* import kotlin.math.max
 
 private lateinit var arr: Array<IntArray>
 private lateinit var visited: Array<BooleanArray>
-private lateinit var walls: MutableList<Pair<Int, Int>>
+private lateinit var walls: MutableList<Wall>
 var n = 0
 var m = 0
 val dx = listOf(-1, 1, 0, 0)
@@ -19,7 +19,7 @@ fun main() = with(System.`in`.bufferedReader()) {
         for (i in 0 until m) {
             val num = st2.nextToken().toInt()
             arr[it][i] = num
-            if(num == 0) walls += Pair(it, i)
+            if(num == 0) walls += Wall(it, i)
         }
     }
 
@@ -33,13 +33,13 @@ fun makeWall(): Int {
     for(i in 0 until size) {
         for(j in i + 1 until size) {
             for(k in j + 1 until size) {
-                arr[walls[i].first][walls[i].second] = 1
-                arr[walls[j].first][walls[j].second] = 1
-                arr[walls[k].first][walls[k].second] = 1
+                arr[walls[i].x][walls[i].y] = 1
+                arr[walls[j].x][walls[j].y] = 1
+                arr[walls[k].x][walls[k].y] = 1
                 max = max(max, findSafeZone())
-                arr[walls[i].first][walls[i].second] = 0
-                arr[walls[j].first][walls[j].second] = 0
-                arr[walls[k].first][walls[k].second] = 0
+                arr[walls[i].x][walls[i].y] = 0
+                arr[walls[j].x][walls[j].y] = 0
+                arr[walls[k].x][walls[k].y] = 0
             }
         }
     }
@@ -72,3 +72,5 @@ fun dfs(x: Int, y: Int) {
         }
     }
 }
+
+data class Wall(val x: Int, val y: Int)
