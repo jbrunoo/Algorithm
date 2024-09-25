@@ -1,7 +1,8 @@
 import java.util.*
 
 private lateinit var arr: Array<CharArray>
-private lateinit var visited: Array<BooleanArray>
+private lateinit var Wvisited: Array<BooleanArray>
+private lateinit var Bvisited: Array<BooleanArray>
 var n = 0
 var m = 0
 val dx = listOf(-1, 0, 1, 0)
@@ -20,20 +21,15 @@ fun main()= with(System.`in`.bufferedReader()){
     val white = mutableListOf<Int>()
     val blue = mutableListOf<Int>()
 
-    visited = Array(m) { BooleanArray(n) }
+    Wvisited = Array(m) { BooleanArray(n) }
+    Bvisited = Array(m) { BooleanArray(n) }
     for(i in 0 until m ) {
         for(j in 0 until n) {
-            if(arr[i][j] == 'W' && !visited[i][j]) {
-                white += dfs(i, j, 'W')
+            if(arr[i][j] == 'W' && !Wvisited[i][j]) {
+                white += dfs(i, j, Wvisited, 'W')
                 cnt=0
-            }
-        }
-    }
-    visited = Array(m) { BooleanArray(n) }
-    for(i in 0 until m) {
-        for(j in 0 until n) {
-            if(arr[i][j] == 'B' && !visited[i][j]) {
-                blue += dfs(i, j, 'B')
+            } else if(arr[i][j] == 'B' && !Bvisited[i][j]) {
+                blue += dfs(i, j, Bvisited,'B')
                 cnt=0
             }
         }
@@ -42,7 +38,7 @@ fun main()= with(System.`in`.bufferedReader()){
     println("${white.sumOf { it * it }} ${blue.sumOf { it * it }}")
 }
 
-fun dfs(x: Int, y:Int, color: Char): Int {
+fun dfs(x: Int, y:Int, visited: Array<BooleanArray>, color: Char): Int {
     visited[x][y] = true
     cnt++
 
@@ -53,7 +49,7 @@ fun dfs(x: Int, y:Int, color: Char): Int {
         if(nx < 0 || ny < 0 || nx >= m || ny >= n) continue
         if(!visited[nx][ny] && arr[nx][ny] == color) {
             visited[nx][ny] = true
-            dfs(nx, ny, color)
+            dfs(nx, ny, visited, color)
         }
     }
 
