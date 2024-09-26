@@ -1,0 +1,1 @@
+fun main()=with(System.`in`.bufferedReader()){var sum=0;repeat(5){sum+=readLine().toInt()};print(sum)}
