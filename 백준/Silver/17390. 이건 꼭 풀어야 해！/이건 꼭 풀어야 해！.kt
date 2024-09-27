@@ -1,28 +1,23 @@
 import java.io.StreamTokenizer
 
-private lateinit var arr: IntArray
-private lateinit var dp: IntArray
-
 fun main() = StreamTokenizer(System.`in`.bufferedReader()).run {
     val sb=StringBuilder()
     fun i():Int{nextToken();return nval.toInt()}
     val n=i();val q=i()
-    arr = IntArray(n) {i()}
-    arr.sort()
-    dp = IntArray(n)
-    dp[0] = arr[0]
+    val arr = IntArray(1001)
+    repeat(n) {arr[i()]++}
+    val dp = IntArray(n+1)
+    var j = 1
+    for(i in 1..1000) {
+        while(arr[i] > 0) {
+            dp[j] = dp[j-1] + i
+            j++
+            arr[i]--
+        }
+    }
     repeat(q) {
-        val l=i();val r=i()
-        var sum = 0
-        sum += sum(r-1) - sum(l-2)
-        sb.append(sum).append("\n")
+        val l=i()-1;val r=i()
+        sb.append(dp[r]-dp[l]).append("\n")
     }
     print(sb)
-}
-
-fun sum(n:Int):Int {
-    if(n == -1) return 0
-    if(dp[n] != 0) return dp[n]
-    dp[n] = sum(n-1) + arr[n]
-    return dp[n]
 }
