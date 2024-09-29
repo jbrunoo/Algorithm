@@ -12,8 +12,8 @@ fun main()=StreamTokenizer(System.`in`.bufferedReader()).run {
         1L -> arr.sum()-arr.max()
         2L -> nums[0] * 8 + nums[1] * 8 + nums[2] * 4
         else -> {
-            val f = nums[0] * (n * n * 2 + n * (n-2) + ((n * n - (n * 3 - 2)) * 2))
-            val s = nums[1] * ((n * 3 - 2) * 2 + n * n - (n * (n - 2) + 4))
+            val f = nums[0] * (5 * n * n - 8 * n + 4)
+            val s = nums[1] * 8 * (n-1)
             val t = nums[2] * 4
             f+s+t
         }
