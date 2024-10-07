@@ -1,17 +1,17 @@
 class Solution {
     fun solution(food: IntArray): String {
-        var answer: String = ""
-        var order = ""
-        
+        val sb = StringBuilder()
         for(i in 1 until food.size) {
-            val n = food[i] / 2
-            if(n > 0) {
-                for(j in 1..n) {
-                    order += i
-                }
+            repeat(food[i] / 2) {
+                sb.append(i)
             }
         }
-        answer = order + "0" + order.reversed()     
-        return answer
+        sb.append(0)    
+        for(i in food.size-1 downTo 1) {
+            repeat(food[i] / 2) {
+                sb.append(i)
+            }
+        }
+        return sb.toString()
     }
 }
