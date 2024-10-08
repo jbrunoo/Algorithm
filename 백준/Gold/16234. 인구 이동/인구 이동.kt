@@ -6,7 +6,8 @@ private lateinit var union: MutableList<Union>
 private var n = 0
 private var l = 0
 private var r = 0
-private var flag = false
+private var unionCnt = 0
+private var unionSum = 0
 
 fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
     fun i():Int{nextToken();return nval.toInt()}
@@ -17,17 +18,20 @@ fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
     var day = 0
 
     while(true) {
-        flag = false
-
+        var flag = false
         visited = Array(n) { BooleanArray(n) }
 
         for(i in 0 until n) {
             for(j in 0 until n) {
                 if(!visited[i][j]) {
                     union = mutableListOf()
-                    union += Union(i, j, arr[i][j])
+                    union += Union(i, j)
+                    unionCnt = 1; unionSum = arr[i][j]
                     dfs(i, j)
-                    if(flag) movePop()
+                    if(unionCnt > 1) {
+                        movePop()
+                        flag = true
+                    }
                 }
             }
         }
@@ -51,22 +55,17 @@ fun dfs(x: Int, y: Int) {
 
         if(nx < 0 || ny < 0 || nx >= n || ny >= n || visited[nx][ny]) continue
         if(abs(arr[x][y] - arr[nx][ny]) in l..r) {
-            union += Union(nx, ny, arr[nx][ny])
-            flag = true
+            union += Union(nx, ny)
+            unionCnt++
+            unionSum += arr[nx][ny]
             dfs(nx, ny)
         }
     }
 }
 
 fun movePop() {
-    val n = union.count()
-    val sum = union.sumOf { it.pop }
-    val average = sum / n
-
-    for ((r, c, _) in union) {
-        arr[r][c] = average
-    }
+    val average = unionSum / unionCnt
+    for ((r, c) in union) arr[r][c] = average
 }
 
-data class Union(val r: Int, val c: Int, val pop: Int)
-
+data class Union(val r: Int, val c: Int)
