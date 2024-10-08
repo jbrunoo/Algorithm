@@ -42,7 +42,7 @@ val dx = listOf(1, -1, 0, 0)
 val dy = listOf(0, 0, 1, -1)
 
 fun bfs(a: Int, b: Int): Int {
-    val queue = LinkedList<Pair<Int, Int>>()
+    val queue = ArrayDeque<Pair<Int, Int>>()
     var dist = 0
     queue.offer(Pair(a, b))
     visited[a][b] = 1
