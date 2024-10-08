@@ -2,7 +2,7 @@ import kotlin.math.abs
 
 private lateinit var arr: Array<IntArray>
 private lateinit var visited: Array<BooleanArray>
-private lateinit var union: MutableList<Union>
+private lateinit var union: ArrayList<Union>
 private var n = 0
 private var l = 0
 private var r = 0
@@ -15,16 +15,17 @@ fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
     arr = Array(n) { IntArray(n) }
     for(i in 0 until n) for(j in 0 until n) arr[i][j] = i()
 
+    union = ArrayList()
     var day = 0
 
     while(true) {
         var flag = false
+
         visited = Array(n) { BooleanArray(n) }
 
         for(i in 0 until n) {
             for(j in 0 until n) {
                 if(!visited[i][j]) {
-                    union = mutableListOf()
                     union += Union(i, j)
                     unionCnt = 1; unionSum = arr[i][j]
                     dfs(i, j)
@@ -32,6 +33,7 @@ fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
                         movePop()
                         flag = true
                     }
+                    union.clear()
                 }
             }
         }
@@ -69,3 +71,4 @@ fun movePop() {
 }
 
 data class Union(val r: Int, val c: Int)
+
