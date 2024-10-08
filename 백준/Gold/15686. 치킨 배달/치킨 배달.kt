@@ -8,7 +8,9 @@ private lateinit var chosen_chickens: MutableList<List<Pos>>
 private var m: Int = 0
 
 fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
-    fun i(): Int { nextToken();return nval.toInt() }
+    fun i(): Int {
+        nextToken();return nval.toInt()
+    }
     val n = i(); m = i(); chicken = mutableListOf(); house = mutableListOf()
 
     for (i in 1..n) {
@@ -44,17 +46,18 @@ fun calcCityChickenDistance(): Int {
     var minCityChickenDistance = Int.MAX_VALUE
     var currentCityChickenDistance = 0
 
-    chosen_chickens.forEach { cPositions ->
-            house.forEach { hPos ->
-                cPositions.forEach { cPos ->
-                    chickenDistances += abs(hPos.x - cPos.x) + abs(hPos.y - cPos.y)
-                }
-                currentCityChickenDistance += chickenDistances.min()
-                chickenDistances.clear()
+    for (cPositions in chosen_chickens) {
+        for (hPos in house) {
+            for (cPos in cPositions) {
+                chickenDistances += abs(hPos.x - cPos.x) + abs(hPos.y - cPos.y)
             }
-            minCityChickenDistance = min(minCityChickenDistance, currentCityChickenDistance)
-            currentCityChickenDistance = 0
+            currentCityChickenDistance += chickenDistances.min()
+            chickenDistances.clear()
+            if (currentCityChickenDistance > minCityChickenDistance) break
         }
+        minCityChickenDistance = min(minCityChickenDistance, currentCityChickenDistance)
+        currentCityChickenDistance = 0
+    }
 
     return minCityChickenDistance
 }
