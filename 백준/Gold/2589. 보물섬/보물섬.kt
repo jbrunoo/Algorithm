@@ -18,12 +18,17 @@ fun main() = with(System.`in`.bufferedReader()) {
         }
     }
 
+    visited = Array(n) { IntArray(m) }
     var minDist = 0
 
     for(i in 0 until n) {
         for(j in 0 until m) {
             if(arr[i][j] == 1) {
-                visited = Array(n) { IntArray(m) }
+                for (a in 0 until n) {
+                    for (b in 0 until m) {
+                        visited[a][b] = 0
+                    }
+                }
                 val dist = bfs(i, j)
                 minDist = kotlin.math.max(minDist, dist)
             }
