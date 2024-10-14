@@ -28,8 +28,8 @@ fun bfs(n: Int, k: Int) {
             again(0, min, k)
             println(min)
             val sb = StringBuilder()
-            for(m in move.reversed()) {
-                sb.append(m).append(" ")
+            for(i in move.lastIndex downTo 0) {
+                sb.append(move[i]).append(" ")
             }
             println(sb)
             break
