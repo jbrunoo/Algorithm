@@ -27,7 +27,11 @@ fun bfs(n: Int, k: Int) {
             val min = visited[p]-1
             again(0, min, k)
             println(min)
-            println(move.reversed().joinToString(" "))
+            val sb = StringBuilder()
+            for(m in move.reversed()) {
+                sb.append(m).append(" ")
+            }
+            println(sb)
             break
         }
 
