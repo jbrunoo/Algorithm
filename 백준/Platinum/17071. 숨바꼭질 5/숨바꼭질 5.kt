@@ -28,9 +28,8 @@ fun bfs(n: Int, k: Int): Int {
         for(i in 1..qs) {
             val x = q.poll()
 
-            for (nx in listOf(x - 1, x + 1, x * 2)) {
-                if (nx !in 0..500000 || visited[s][nx]) continue
-                
+            for (nx in intArrayOf(x - 1, x + 1, x * 2)) {
+                if (nx < 0 || nx > 500000 || visited[s][nx]) continue
                 visited[s][nx] = true
                 q.offer(nx)
             }
