@@ -1,42 +1,40 @@
 import java.util.*
 
 private lateinit var visited: Array<BooleanArray>
-var second = 0
 
 fun main() = with(System.`in`.bufferedReader()) {
     val st = StringTokenizer(readLine())
     val n = st.nextToken().toInt(); val k = st.nextToken().toInt()
     visited = Array(2) { BooleanArray(500001) }
 
-    if(n == k) print(0) else bfs(n, k)
+    print(bfs(n, k))
 }
 
-fun bfs(n: Int, k: Int) {
-    val q = ArrayDeque<Pos>()
-    q.offer(Pos(n, k))
-    visited[second % 2][n] = true
+fun bfs(n: Int, k: Int): Int {
+    if(n == k) return 0
+    val q = ArrayDeque<Int>()
+    q.offer(n)
+    var ny = k
+    var second = 0
+    visited[second][n] = true
 
     while (q.isNotEmpty()) {
         second++
-        val qs = q.size
-        for(i in 1..qs) {
-            val (x, y) = q.poll()
+        ny += second
+
+        for(i in 1..q.size) {
+            val x = q.poll()
 
             for (nx in listOf(x - 1, x + 1, x * 2)) {
-                val ny = y + second
-                if (nx !in 0..500000 || ny !in 0..500000) continue
-                if(nx == ny || visited[second % 2][ny]) {
-                    print(second)
-                    return
-                }
-                if(!visited[second % 2][nx]) {
-                    visited[second % 2][nx] = true
-                    q.offer(Pos(nx, ny))
-                }
+                if(ny > 500000) return -1
+                if (nx !in 0..500000 || visited[second % 2][nx]) continue
+                visited[second % 2][nx] = true
+
+                if(visited[second % 2][ny]) return second
+                q.offer(nx)
             }
         }
     }
-    print(-1)
-}
 
-data class Pos(val np: Int, val kp: Int)
+    return -1
+}
