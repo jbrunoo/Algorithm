@@ -16,11 +16,12 @@ fun bfs(n: Int, k: Int): Int {
     q.offer(n)
     var ny = k
     var second = 0
+    var s = 0
     visited[second][n] = true
 
     while (q.isNotEmpty()) {
-        second++
-        ny += second
+        ny += ++second
+        s = second % 2
         if(ny > 500000) return -1
 
         val qs = q.size
@@ -28,10 +29,10 @@ fun bfs(n: Int, k: Int): Int {
             val x = q.poll()
 
             for (nx in listOf(x - 1, x + 1, x * 2)) {
-                if (nx !in 0..500000 || visited[second % 2][nx]) continue
-                visited[second % 2][nx] = true
+                if (nx !in 0..500000 || visited[s][nx]) continue
+                visited[s][nx] = true
 
-                if(visited[second % 2][ny]) return second
+                if(visited[s][ny]) return second
                 q.offer(nx)
             }
         }
