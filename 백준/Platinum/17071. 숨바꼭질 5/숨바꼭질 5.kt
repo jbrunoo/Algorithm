@@ -21,12 +21,13 @@ fun bfs(n: Int, k: Int): Int {
     while (q.isNotEmpty()) {
         second++
         ny += second
+        if(ny > 500000) return -1
 
-        for(i in 1..q.size) {
+        val qs = q.size
+        for(i in 1..qs) {
             val x = q.poll()
 
             for (nx in listOf(x - 1, x + 1, x * 2)) {
-                if(ny > 500000) return -1
                 if (nx !in 0..500000 || visited[second % 2][nx]) continue
                 visited[second % 2][nx] = true
 
