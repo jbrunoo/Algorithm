@@ -16,7 +16,7 @@ fun bfs(n: Int, k: Int): Int {
     q.offer(n)
     var ny = k
     var second = 0
-    var s = 0
+    var s : Int
     visited[second][n] = true
 
     while (q.isNotEmpty()) {
@@ -30,12 +30,12 @@ fun bfs(n: Int, k: Int): Int {
 
             for (nx in listOf(x - 1, x + 1, x * 2)) {
                 if (nx !in 0..500000 || visited[s][nx]) continue
+                
                 visited[s][nx] = true
-
-                if(visited[s][ny]) return second
                 q.offer(nx)
             }
         }
+        if(visited[s][ny]) return second
     }
 
     return -1
