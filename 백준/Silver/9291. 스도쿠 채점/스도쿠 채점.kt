@@ -22,17 +22,17 @@ fun main() = with(System.`in`.bufferedReader()) {
 }
 
 fun check(arr: Array<IntArray>): Boolean {
-    for (row in arr) if (row.toSet().size != 9) return false
-
     for (i in 0..8) {
-        val tmp = BooleanArray(9)
-        for (j in 0..8) {
-            val idx = arr[j][i]-1
-            if (tmp[idx]) return false
-            tmp[idx] = true
+        val tmp1 = BooleanArray(9)
+        val tmp2 = BooleanArray(9)
+        for(j in 0..8) {
+            val idx1 = arr[i][j]-1
+            val idx2 = arr[j][i]-1
+            if (tmp1[idx1] || tmp2[idx2]) return false
+            tmp1[idx1] = true; tmp2[idx2] = true
         }
     }
-//
+
     for (i in 0..6 step (3)) {
         for (j in 0..6 step (3)) {
             val tmp = BooleanArray(9)
