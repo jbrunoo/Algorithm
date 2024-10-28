@@ -1,17 +1,8 @@
     fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
         fun i(): Int { nextToken();return nval.toInt() }
         val n = i(); val m = i()
-        val land = Array(n+1) { IntArray(m+1) }
-        repeat(n) { i -> repeat(m) { j -> land[i+1][j+1] = i() } }
-        
         val dp = Array(n + 1) { IntArray(m + 1) }
-
-        for(i in 1..n) {
-            for(j in 1..m) {
-                dp[i][j] = dp[i - 1][j] + dp[i][j - 1] - dp[i - 1][j - 1] + land[i][j]
-            }
-        }
-
+        repeat(n) { i -> repeat(m) { j -> dp[i+1][j+1] = dp[i][j+1] + dp[i+1][j] - dp[i][j] + i() } }
         val sb = StringBuilder()
         repeat(i()) {
             val x1 = i(); val y1 = i(); val x2 = i(); val y2 = i()
