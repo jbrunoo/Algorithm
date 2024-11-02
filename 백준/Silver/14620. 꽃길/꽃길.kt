@@ -24,20 +24,11 @@ fun dfs(cnt: Int, price: Int) {
     for(i in 1 until n - 1) {
         for(j in 1 until n - 1) {
             if(check(i, j)) {
-                visitFlower(i, j)
                 dfs(cnt + 1, price + getPrice(i, j))
-                visitFlower(i, j)
+                notVisited(i, j)
             }
         }
     }
-}
-
-fun visitFlower(i: Int, j: Int) {
-        visited[i][j] = !visited[i][j]
-        visited[i+1][j] = !visited[i+1][j]
-        visited[i-1][j] = !visited[i-1][j]
-        visited[i][j+1] = !visited[i][j+1]
-        visited[i][j-1] = !visited[i][j-1]
 }
 
 val dx = listOf(0, 0, -1, 1)
@@ -53,4 +44,26 @@ fun check(x: Int, y: Int): Boolean {
     return true
 }
 
-fun getPrice(x: Int, y:Int) = arr[x][y] + arr[x+1][y] + arr[x][y+1] + arr[x-1][y] + arr[x][y-1]
+fun getPrice(x: Int, y:Int): Int {
+    visited[x][y] = true
+    var price = arr[x][y]
+    for(i in 0..3) {
+        val nx = x + dx[i]
+        val ny = y + dy[i]
+
+        visited[nx][ny] = true
+        price += arr[nx][ny]
+    }
+
+    return price
+}
+
+fun notVisited(x: Int, y: Int) {
+    visited[x][y] = false
+    for(i in 0..3) {
+        val nx = x + dx[i]
+        val ny = y + dy[i]
+
+        visited[nx][ny] = false
+    }
+}
