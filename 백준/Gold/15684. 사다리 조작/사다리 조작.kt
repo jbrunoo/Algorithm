@@ -1,6 +1,7 @@
 private lateinit var visited: Array<BooleanArray>
 private var n = 0
 private var h = 0
+private var ret = 4
 
 fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
     fun i(): Int { nextToken(); return nval.toInt() }
@@ -8,37 +9,36 @@ fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
     visited = Array(h + 1) { BooleanArray(n + 1) }
 
     repeat(m) {
-        val a = i();
-        val b = i()
+        val a = i(); val b = i()
         visited[a][b] = true
     }
 
-    if (getResult(n)) print(0)
-    else {
-        for (i in 1..3) {
-            if (combi(0, 1, i)) {
-                print(i)
-                return
-            }
+    for (i in 0..3) {
+        combi(0, 1, i)
+        if (ret != 4) {
+            print(ret)
+            return
         }
-        print(-1)
     }
+    print(-1)
 }
 
-fun combi(cnt: Int, beginRow: Int, depth: Int): Boolean {
-    if (cnt == depth) return getResult(n)
+fun combi(cnt: Int, beginRow: Int, depth: Int) {
+    if (cnt == depth) {
+        if(getResult(n)) ret = cnt
+        return
+    }
 
     for (i in beginRow..h) {
         for (j in 1 until n) {
             if (i == 0) continue
             if (!visited[i][j] && !visited[i][j - 1] && !visited[i][j + 1]) {
                 visited[i][j] = true
-                if (combi(cnt + 1, i, depth)) return true
+                combi(cnt + 1, i, depth)
                 visited[i][j] = false
             }
         }
     }
-    return false
 }
 
 fun getResult(n: Int): Boolean {
