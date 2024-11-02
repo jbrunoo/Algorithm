@@ -2,6 +2,7 @@ private lateinit var visited: Array<BooleanArray>
 private var n = 0
 private var h = 0
 private var ret = 4
+var flag = false
 
 fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
     fun i(): Int { nextToken(); return nval.toInt() }
@@ -24,19 +25,26 @@ fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
 }
 
 fun combi(cnt: Int, beginRow: Int, depth: Int) {
+    if(flag) return
     if (cnt == depth) {
-        if(getResult(n)) ret = cnt
+        if(getResult(n)) {
+            ret = cnt
+            flag = true
+        }
         return
     }
 
     for (i in beginRow..h) {
-        for (j in 1 until n) {
+        var beginCol = 1
+        for (j in beginCol until n) {
             if (i == 0) continue
-            if (!visited[i][j] && !visited[i][j - 1] && !visited[i][j + 1]) {
-                visited[i][j] = true
-                combi(cnt + 1, i, depth)
-                visited[i][j] = false
+            if (visited[i][j] || visited[i][j - 1] || visited[i][j + 1]) {
+                beginCol += 2
+                continue
             }
+            visited[i][j] = true
+            combi(cnt + 1, i, depth)
+            visited[i][j] = false
         }
     }
 }
