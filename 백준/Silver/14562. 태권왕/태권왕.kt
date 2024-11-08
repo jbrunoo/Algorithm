@@ -1,24 +1,22 @@
-import java.io.StreamTokenizer
 import java.util.*
 lateinit var q: ArrayDeque<Score>
-fun main() = StreamTokenizer(System.`in`.bufferedReader()).run {
+fun main()=java.io.StreamTokenizer(System.`in`.bufferedReader()).run{
     fun i():Int{nextToken();return nval.toInt()}
-    val sb = StringBuilder()
-    q = ArrayDeque()
-    repeat(i()) {
-        q.clear()
-        q.offer(Score(i(), i(), 0))
-        sb.append(bfs()).append("\n")
+    q=ArrayDeque()
+    StringBuilder().run{
+        repeat(i()){
+            q.clear()
+            q.offer(Score(i(),i(),0))
+            appendLine(bfs())}
+        print(this)
     }
-    print(sb)
 }
-fun bfs(): Int {
-    while (q.isNotEmpty()) {
-        val (s, t, c) = q.poll()
-        if (s == t) return c
-        val x = s * 2;val y = t + 3;val z = s + 1
-        if (x <= y) q.offer(Score(x, y, c + 1))
-        if (z <= t) q.offer(Score(z, t, c + 1))
+fun bfs():Int{
+    while(q.isNotEmpty()){
+        val(s,t,c)=q.poll()
+        if(s==t)return c
+        if(s*2<=t+3)q.offer(Score(s*2,t+3,c + 1))
+        if(s+1<=t)q.offer(Score(s+1,t,c+1))
     }
     return 0
 }
