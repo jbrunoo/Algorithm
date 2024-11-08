@@ -1,9 +1,12 @@
 import java.util.*
+lateinit var q:ArrayDeque<Score>
+data class Score(val s:Int, val t:Int, val c:Int)
 fun main()=java.io.StreamTokenizer(System.`in`.bufferedReader()).run{
     fun i():Int{nextToken();return nval.toInt()}
+    q=ArrayDeque()
     StringBuilder().run{
         repeat(i()){
-            val q=ArrayDeque<Score>()
+            q.clear()
             q.offer(Score(i(),i(),0))
             while(q.isNotEmpty()){
                 val(s,t,c)=q.poll()
@@ -14,4 +17,3 @@ fun main()=java.io.StreamTokenizer(System.`in`.bufferedReader()).run{
         print(this)
     }
 }
-data class Score(val s:Int, val t:Int, val c:Int)
