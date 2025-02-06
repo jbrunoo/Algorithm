@@ -1,22 +1,13 @@
-import java.util.*
-
-fun main() = with(System.`in`.bufferedReader()) {
-    val n = readLine().toInt()
-    val pq = PriorityQueue<Int>()
-    val arr = ArrayList<Request>(n)
+fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
+    fun i(): Int { nextToken(); return nval.toInt() }
+    val n = i(); val pq = java.util.PriorityQueue<Int>(); val arr = ArrayList<Request>(n)
 
     if(n == 0) {
-        print(0)
-        return@with
+        print(0); return
     }
 
-    repeat(n) {
-        val (p, d) = readLine().split(" ").map { it.toInt() }
-        arr.add(Request(p, d))
-    }
-
+    repeat(n) { arr.add(Request(i(), i())) }
     arr.sortBy { it.day }
-
     repeat(n) {
         val (p, d) = arr[it]
 
