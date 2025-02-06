@@ -2,8 +2,8 @@ import java.util.*
 
 fun main() = with(System.`in`.bufferedReader()) {
     val n = readLine().toInt()
-    val pq = PriorityQueue<Request>(compareBy { it.pay })
-    val arr = Array(n) { Request() }
+    val pq = PriorityQueue<Int>()
+    val arr = ArrayList<Request>(n)
 
     if(n == 0) {
         print(0)
@@ -12,7 +12,7 @@ fun main() = with(System.`in`.bufferedReader()) {
 
     repeat(n) {
         val (p, d) = readLine().split(" ").map { it.toInt() }
-        arr[it] = (Request(p, d))
+        arr.add(Request(p, d))
     }
 
     arr.sortBy { it.day }
@@ -21,16 +21,16 @@ fun main() = with(System.`in`.bufferedReader()) {
         val (p, d) = arr[it]
 
         if(pq.size < d) {
-            pq.offer(Request(p, d))
+            pq.offer(p)
         } else {
-            if(pq.peek().pay < p) {
+            if(pq.peek() < p) {
                 pq.poll()
-                pq.offer(Request(p, d))
+                pq.offer(p)
             }
         }
     }
 
-    print(pq.sumOf { it.pay })
+    print(pq.sum())
 }
 
 data class Request(
