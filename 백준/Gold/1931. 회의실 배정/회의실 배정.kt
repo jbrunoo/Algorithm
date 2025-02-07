@@ -9,8 +9,7 @@ fun main() = with(System.`in`.bufferedReader()) {
         arr.add(Meet(st.nextToken().toInt(), st.nextToken().toInt()))
     }
 
-    arr.sortBy { it.start }
-    arr.sortBy { it.end }
+    arr.sortWith(compareBy<Meet> { it.end }.thenBy { it.start })
 
     var ret = 0
     var initEnd = 0
