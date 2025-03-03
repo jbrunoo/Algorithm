@@ -1,6 +1,8 @@
 fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
     fun i(): Int {nextToken(); return nval.toInt() }
-    repeat(i()) { println(calc(i(),i(),i(),i())) }
+    val sb = StringBuilder()
+    repeat(i()) { sb.append((calc(i(),i(),i(),i()))).append("\n") }
+    print(sb)
 }
 
 private fun calc(m: Int, n: Int, x: Int, y: Int): Int {
@@ -8,7 +10,7 @@ private fun calc(m: Int, n: Int, x: Int, y: Int): Int {
     val lcm = m * n / gcp(m, n)
 
     while (lcm >= sum) {
-        if ((sum - x) % m == 0 && (sum - y) % n == 0) return sum
+        if ((sum - y) % n == 0) return sum
         sum += m
     }
 
