@@ -1,59 +1,49 @@
-private lateinit var mn: IntArray
-private lateinit var mns: Array<IntArray>
-private lateinit var combiResult: MutableList<Int>
-var min = Int.MAX_VALUE
-var ret = ""
-
 fun main() = java.io.StreamTokenizer(System.`in`.bufferedReader()).run {
     fun i(): Int { nextToken(); return nval.toInt() }
 
-    val n = i()
-    mn = IntArray(4) { i() }
-    mns = Array(n) { IntArray(5) { i() } }
+    val n = i(); val mp = i(); val mf = i(); val ms = i(); val mu = i()
+    val table = Array(n) { IntArray(5) { i() } }
 
-    for(i in 1..n) {
-        combiResult = mutableListOf()
-        combi(0, 0, i)
-    }
-    if(min == Int.MAX_VALUE) print(-1)
-    else print("$min\n$ret")
-}
+    var minCost = Int.MAX_VALUE
+    val end = (1 shl n) - 1
+    val tmpArray = IntArray(5)
+    var minUnion = emptyList<Int>()
 
+    for (i in 1..end) {
+        val tmpUnion = mutableListOf<Int>()
 
-fun combi(cnt: Int, begin: Int, depth: Int) {
-    if(cnt == depth) {
-        var mp = 0
-        var mf = 0
-        var ms = 0
-        var mu = 0
-        var cost = 0
-
-        combiResult.forEach { idx ->
-            mp += mns[idx][0]
-            mf += mns[idx][1]
-            ms += mns[idx][2]
-            mu += mns[idx][3]
-            cost += mns[idx][4]
-        }
-
-        if(mn[0] <= mp && mn[1] <= mf && mn[2] <= ms && mn[3] <= mu) {
-            val res = combiResult.map { it + 1 }.joinToString(" ")
-            if(cost < min || (cost == min && isOrder(res))) {
-                min = cost
-                ret = res
+        for (j in 0 until n) {
+            if (i and (1 shl j) >= 1) {
+                tmpUnion += j + 1
+                tmpArray[0] += table[j][0]
+                tmpArray[1] += table[j][1]
+                tmpArray[2] += table[j][2]
+                tmpArray[3] += table[j][3]
+                tmpArray[4] += table[j][4]
             }
         }
 
-        return
+        if (tmpArray[0] >= mp && tmpArray[1] >= mf && tmpArray[2] >= ms && tmpArray[3] >= mu) {
+            if (tmpArray[4] < minCost) {
+                minCost = tmpArray[4]
+                minUnion = tmpUnion
+            } else if (tmpArray[4] == minCost) {
+                minUnion = compareUnion(minUnion, tmpUnion)
+            }
+        }
+        tmpArray.fill(0)
     }
 
-    for(i in begin until mns.size) {
-        combiResult += i
-        combi(cnt + 1, i + 1, depth)
-        combiResult -= i
-    }
-
-    return
+    if (minCost == Int.MAX_VALUE) print(-1) else print("$minCost\n${minUnion.joinToString(" ")}")
 }
 
-fun isOrder(combiResult: String): Boolean = ret > combiResult
+fun compareUnion(minUnion: List<Int>, tmpUnion: List<Int>): List<Int> {
+    val len = kotlin.math.min(minUnion.size, tmpUnion.size)
+
+    for (i in 0 until len) {
+        if (minUnion[i] < tmpUnion[i]) return minUnion
+        if (minUnion[i] > tmpUnion[i]) return tmpUnion
+    }
+
+    return if (len == minUnion.size) minUnion else tmpUnion
+}
