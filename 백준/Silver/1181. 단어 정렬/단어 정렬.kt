@@ -1,6 +1,6 @@
 fun main() = with(System.`in`.bufferedReader()) {
     val n = readLine().toInt()
-    val set = mutableSetOf<String>()
+    val set = sortedSetOf<String>()
 
     repeat(n) {
         set.add(readLine())
