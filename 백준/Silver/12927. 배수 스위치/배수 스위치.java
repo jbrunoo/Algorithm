@@ -24,11 +24,11 @@ public class Main {
                 }
                 cnt++;
             }
+        }
 
-            if (check()) {
-                System.out.print(cnt);
-                return;
-            }
+        if (check()) {
+            System.out.print(cnt);
+            return;
         }
 
         System.out.print(-1);
