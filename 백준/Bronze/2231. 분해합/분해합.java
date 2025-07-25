@@ -6,9 +6,8 @@ public class Main
 	{
 		Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int min = 1_000_000;
         
-        for (int i = n - 1; i > 0; i--) {
+        for (int i = 0; i < n - 1; i++) {
         	int sum = i;
         	int temp = i;
             
@@ -20,11 +19,11 @@ public class Main
             }
         	
         	if (sum == n) {
-        		min = Math.min(min, i);
+        		System.out.println(i);
+                return;
         	}
         }
-       
-        if (min == 1_000_000)System.out.println(0); 
-        else System.out.println(min);
+
+        System.out.println(0);
 	}
 }
