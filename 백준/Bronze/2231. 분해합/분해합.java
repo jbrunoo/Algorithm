@@ -6,9 +6,10 @@ public class Main
 	public static void main(String args[]) throws Exception
 	{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
+        String str = br.readLine();
+        int n = Integer.parseInt(str);
         
-        for (int i = 0; i < n - 1; i++) {
+        for (int i = n - str.length() * 9; i < n - 1; i++) {
         	int sum = i;
         	int temp = i;
             
