@@ -4,35 +4,30 @@ public class Main {
 	public static void main(String args[])
 	{
 		Scanner sc = new Scanner(System.in);
-		int a = sc.nextInt(); int b = sc.nextInt();
+		long a = sc.nextLong(); int b = sc.nextInt();
 		System.out.println(bfs(a, b));
 	}
 	
-	static int bfs(int a, int b) {
-		Queue<Pos> q = new LinkedList<>();
-		boolean[] visited = new boolean[b];
-		q.add(new Pos(a, 1));
+	static int bfs(long a, int b) {
+		Queue<Long> q = new LinkedList<>();
+		q.add(a);
+		int cnt = 1;
 		
 		while (!q.isEmpty()) {
-			Pos pos = q.poll();
-
-			if (pos.a == b) return pos.cnt;
-			if (pos.a > b) continue;
+			int size = q.size();
 			
-			q.add(new Pos(pos.a * 2, pos.cnt + 1));
-			q.add(new Pos(pos.a * 10 + 1, pos.cnt + 1));
+			for (int i = 0; i < size; i++) {
+				long n = q.poll();
+				if (n == b) return cnt;
+				if (n > b) continue;
+				
+				q.add(n * 2);
+				q.add(n * 10 + 1);
+			}
+			cnt++;
 		}
 		
 		return -1;
 		
-	}
-}
-
-class Pos {
-	long a; int cnt;
-	
-	Pos(long a, int cnt) {
-		this.a = a;
-		this.cnt = cnt;
 	}
 }
