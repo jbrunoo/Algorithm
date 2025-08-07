@@ -1,56 +1,74 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
-	private static int n, ret;
-	private static Flavor[] flavors;
-	private static boolean[] visited;
-		
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
-		
-		n = Integer.parseInt(br.readLine());
-		ret = Integer.MAX_VALUE;
-		
-		flavors = new Flavor[n];
-		visited = new boolean[n];
-		
-		for (int i = 0; i < n; i++) {
-			st = new StringTokenizer(br.readLine());
-			int s = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
-			flavors[i] = new Flavor(s, b);
-		}
-		
-		subset(0, 1, 0);
-		
-		System.out.println(ret);
+class Cook{
+	private int S;
+	private int B;
+	
+	public Cook(int s, int b) {
+		this.S = s;
+		this.B = b;
 	}
-
-	private static void subset(int depth, int mul, int sum) {
-		if (depth == n) {
-			if (sum == 0 || mul == 1) return;
-			
-			int diff = Math.abs(mul - sum);
-			if (ret > diff) ret = diff;
-			return;
-		}
-		
-		visited[depth] = true;
-		subset(depth + 1, mul * flavors[depth].s, sum + flavors[depth].b);
-		visited[depth] = false;
-		subset(depth + 1, mul, sum);
-	}
+	
+	public void setS(int S) {this.S = S;}
+	public void setB(int B) {this.B = B;}
+	public int getS() {return S;}
+	public int getB() {return B;}
 }
 
-class Flavor {
-	int s, b;
+public class Main {
+	private static int N; // 원소의 개수
+	private static Cook[] input; // 입력받은 원소들
+	private static boolean[] isSelected; // 부분집합에 포함 여부
 	
-	Flavor(int s, int b) {
-		this.s = s;
-		this.b = b;
+	private static int min = Integer.MAX_VALUE;
+
+	public static void main(String[] args) throws Exception {
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+		StringTokenizer st = new StringTokenizer(in.readLine(), " ");
+		N = Integer.parseInt(st.nextToken());
+
+		input = new Cook[N];
+		isSelected = new boolean[N];
+
+		for (int i = 0; i < N; i++) {
+			String[] split = in.readLine().split(" ");
+			int s = Integer.parseInt(split[0]);
+			int b = Integer.parseInt(split[1]);
+			input[i] = new Cook(s, b);
+		}
+
+		generateSubSet2(0, 1, 0);
+		System.out.println(min);
+		
+	}
+	
+	private static void generateSubSet2(int cnt, int mul, int sum) {
+		
+		// 기저 부분
+		if (cnt == N) { // 모든 원소를 고려
+			
+			for(int i=0; i<isSelected.length; i++) {
+				if(isSelected[i]) break;
+				if(i==isSelected.length-1) return;
+			}
+			
+			if (min>Math.abs(mul-sum)) {
+				min = Math.abs(mul-sum);
+			}
+			return;
+		}
+
+		// 유도 부분
+		// 현재 원소를 부분집합에 포함
+		isSelected[cnt] = true;
+		generateSubSet2(cnt + 1, mul*input[cnt].getS(), sum + input[cnt].getB());
+
+		// 현재 원소를 부분집합에 미포함
+		isSelected[cnt] = false;
+		generateSubSet2(cnt + 1, mul, sum);
 	}
 }
