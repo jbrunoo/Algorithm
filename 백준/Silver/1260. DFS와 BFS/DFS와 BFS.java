@@ -34,6 +34,10 @@ class Main {
             adj[to].add(from);
         }
 
+        for (int i = 1; i <= n; i++) {
+            Collections.sort(adj[i]);
+        }
+
         dfs(v);
         visited = new boolean[n + 1];
         sb.append("\n");
@@ -45,7 +49,6 @@ class Main {
         visited[start] = true;
         sb.append(start).append(" ");
 
-        Collections.sort(adj[start]);
         for (int next : adj[start]) {
             if (visited[next]) continue;
             dfs(next);
@@ -55,14 +58,15 @@ class Main {
     private static void bfs(int start) {
         Queue<Integer> q = new ArrayDeque<>();
         q.add(start);
+        visited[start] = true;
 
         while(!q.isEmpty()) {
             int s = q.poll();
-            if (visited[s]) continue;
-            visited[s] = true;
             sb.append(s).append(" ");
 
             for (int next : adj[s]) {
+                if (visited[next]) continue;
+                visited[next] = true;
                 q.add(next);
             }
         }
