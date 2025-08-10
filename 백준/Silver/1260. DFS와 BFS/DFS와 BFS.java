@@ -7,6 +7,7 @@ class Main {
 
     private static List<Integer>[] adj;
     private static boolean[] visited;
+    private static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -35,15 +36,14 @@ class Main {
 
         dfs(v);
         visited = new boolean[n + 1];
-        System.out.println();
+        sb.append("\n");
         bfs(v);
+        System.out.println(sb);
     }
 
     private static void dfs(int start) {
-        if (start == 0) return;
-
         visited[start] = true;
-        System.out.print(start + " ");
+        sb.append(start).append(" ");
 
         Collections.sort(adj[start]);
         for (int next : adj[start]) {
@@ -60,7 +60,7 @@ class Main {
             int s = q.poll();
             if (visited[s]) continue;
             visited[s] = true;
-            System.out.print(s + " ");
+            sb.append(s).append(" ");
 
             for (int next : adj[s]) {
                 q.add(next);
