@@ -1,69 +1,70 @@
-import java.util.ArrayDeque;
-import java.util.Queue;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
-public class Main {
-	private static int V; // 정점 개수
-	private static int[][] adjMatrix; // 인접 행렬
+class Main {
 
-	public static void main(String[] args) {
+    private static List<Integer>[] adj;
+    private static boolean[] visited;
 
-		Scanner sc = new Scanner(System.in);
-		V = sc.nextInt();
-		int E = sc.nextInt();
-		int start = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        st = new StringTokenizer(br.readLine());
 
-		adjMatrix = new int[V][V];
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int v = Integer.parseInt(st.nextToken());
 
-		int from, to;
-		for (int i = 0; i < E; i++) {
-			from = sc.nextInt();
-			to = sc.nextInt();
+        adj = new ArrayList[n + 1];
+        visited = new boolean[n + 1];
 
-			adjMatrix[to-1][from-1] = adjMatrix[from-1][to-1] = 1;
-		}
-		dfs(start-1, new boolean[V]);
-		System.out.println();
-		bfs(start-1);
-	}
+        for (int i = 1; i <= n; i++) {
+            adj[i] = new ArrayList<>();
+        }
 
-	private static void dfs(int current, boolean[] visited) {
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int from = Integer.parseInt(st.nextToken());
+            int to = Integer.parseInt(st.nextToken());
 
-		visited[current] = true;
+            adj[from].add(to);
+            adj[to].add(from);
+        }
 
-		System.out.print((current+1) + " ");
+        dfs(v);
+        visited = new boolean[n + 1];
+        System.out.println();
+        bfs(v);
+    }
 
-		for (int i = 0; i < V; i++) {
-			if (adjMatrix[current][i] != 0 && !visited[i]) {
-				dfs(i, visited);
-			}
-		}
-	}
-	
-	private static void bfs(int start) {
+    private static void dfs(int start) {
+        if (start == 0) return;
 
-		Queue<Integer> queue = new ArrayDeque<>();
-		boolean[] visited = new boolean[V];
+        visited[start] = true;
+        System.out.print(start + " ");
 
-		queue.offer(start);
-		visited[start] = true; 
+        Collections.sort(adj[start]);
+        for (int next : adj[start]) {
+            if (visited[next]) continue;
+            dfs(next);
+        }
+    }
 
-		int current = start;
-		while (!queue.isEmpty()) {
-			
-			current = queue.poll();
+    private static void bfs(int start) {
+        Queue<Integer> q = new ArrayDeque<>();
+        q.add(start);
 
-			System.out.print((current+1) + " ");
+        while(!q.isEmpty()) {
+            int s = q.poll();
+            if (visited[s]) continue;
+            visited[s] = true;
+            System.out.print(s + " ");
 
-			for (int i = 0; i < V; i++) {
-				
-				if (adjMatrix[current][i] != 0  
-						&& !visited[i]) { 				
-					
-					queue.offer(i);
-					visited[i] = true; 
-				}
-			}
-		}
-	}
+            for (int next : adj[s]) {
+                q.add(next);
+            }
+        }
+    }
 }
