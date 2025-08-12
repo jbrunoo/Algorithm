@@ -1,62 +1,65 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+class Node {
+	public int vertex;
+	public Node link;
+
+	Node(int vertex, Node link) {
+		this.vertex = vertex;
+		this.link = link;
+	}
+}
+
 public class Main {
-	
-	private static int n, m;
-	private static ArrayList<Integer>[] adj;
-	private static boolean[] visited;
-	
-	
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		n = Integer.parseInt(st.nextToken());
-		m = Integer.parseInt(st.nextToken());
-		adj = new ArrayList[n];
-		
-		for (int i = 0; i < n; i++) {
-			adj[i] = new ArrayList<>();
+	private static int N;
+	private static Node[] array;
+	private static int result;
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(in.readLine());
+
+		N = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
+		array = new Node[N];
+
+		int from, to;
+		for (int i = 0; i < M; i++) {
+			st = new StringTokenizer(in.readLine());
+
+			from = Integer.parseInt(st.nextToken());
+			to = Integer.parseInt(st.nextToken());
+
+			array[from] = new Node(to, array[from]);
+			array[to] = new Node(from, array[to]);
 		}
-		
-		for (int i = 0; i < m; i++) {
-			st = new StringTokenizer(br.readLine());
-			int from = Integer.parseInt(st.nextToken());
-			int to = Integer.parseInt(st.nextToken());
-			
-			adj[from].add(to);
-			adj[to].add(from);
+		result = 0;
+
+		for (int i = 0; i < N; i++) {
+			dfs(i, 0, new boolean[N]);
+			if (result == 1)
+				break;
 		}
-		
-		for (int i = 0; i < n; i++) {
-			visited = new boolean[n];
-			if(dfs(i, 1)) {
-				System.out.println(1);
-				return;
+		System.out.println(result);
+	}
+
+	private static void dfs(int current, int depth, boolean[] visited) {
+
+		visited[current] = true;
+
+		if (depth == 4) {
+			result = 1;
+			return;
+		}
+
+		for (Node temp = array[current]; temp != null; temp = temp.link) {
+			if (!visited[temp.vertex]) {
+				dfs(temp.vertex, depth + 1, visited);
 			}
 		}
 		
-		System.out.println(0);
+		visited[current] = false;
 	}
-
-
-	private static boolean dfs(int start, int cnt) {
-		if (cnt == 5) {
-			return true;
-		}
-		visited[start] = true;
-		
-		for (int next : adj[start]) {
-			if (visited[next]) continue;
-			if(dfs(next, cnt + 1)) return true;
-			visited[next] = false;
-		}
-		
-		return false;
-	}
-	
-	
 }
