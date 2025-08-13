@@ -2,14 +2,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
 	
 	private static int N;
-	private static int[] parents;
 	private static int[] population;
 	private static boolean[] district;
 	private static ArrayList<Integer>[] adj;
@@ -49,17 +47,19 @@ public class Main {
 		if (min == Integer.MAX_VALUE) min = -1;
 		System.out.println(min);
 	}
-	
+
 	private static void subset(int depth) {
 		if (depth == N) {
 			
-			int divideCnt = 0;
+			int divideTrueCnt = 0;
+			int divideFalseCnt = 0;
 			for (int i = 0; i < N; i++) {
-				if (district[i]) divideCnt++;
-				else divideCnt--;
+				if (district[i]) divideTrueCnt++;
+				else divideFalseCnt++;
 			}
 			
-			if (divideCnt == N || divideCnt == -N) return;
+			if (divideTrueCnt == 0 || divideFalseCnt == 0) return;
+			if (divideTrueCnt > divideFalseCnt) return;
 			
 			boolean flag1 = false;
 			boolean flag2 = false;
@@ -123,7 +123,7 @@ public class Main {
 			if (district[i]) first += population[i];
 			else second += population[i];
 		}
-		
+				
 		return Math.abs(first - second);
 	}
 }
