@@ -2,6 +2,7 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 class Main {
@@ -10,6 +11,7 @@ class Main {
     private static int[][] castle;
     private static int[][] castleCopy;
     private static boolean[] archer;
+    private static boolean[][] target;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -60,14 +62,21 @@ class Main {
         }
     }
 
+    // 궁수 3명 뽑고
+    // 돌리는데 적 탐색해서
+    // 적 타켓이 되는 적 다 선택해본 다음
+    // 그 중에서 제일 맞는 놈을 visited 하나 선택하자
+    // 이걸 3회 반복
+    // 그리고 visited에 있는거 제거
+
     private static int attack() {
         int cnt = 0;
-        for (int row = 0; row < n; row++) {
-            boolean[][] target = new boolean[n][m];
+        for (int row = n - 1; row >= 0; row--) {
+            target = new boolean[n][m];
 
             for (int i = 0; i < m; i++) {
                 if (archer[i]) {
-                    Point p = selectTarget(n - row - 1, i);
+                    Point p = selectTarget(row + 1, i);
                     if (p.x != -1) {
                         target[p.x][p.y] = true;
                     }
@@ -91,10 +100,10 @@ class Main {
         int minDistance = d + 1;
         Point p = new Point(-1, -1);
 
-        for (int i = 0; i <= row; i++) {
+        for (int i = row - 1; i >= 0; i--) {
             for (int j = 0; j < m; j++) {
                 if (castleCopy[i][j] == 1) {
-                    int dist = getDistance(row + 1, y1, i, j);
+                    int dist = getDistance(row, y1, i, j);
                     if (dist <= d) {
                         if (minDistance > dist || minDistance == dist && j < p.y) {
                             minDistance = dist;
