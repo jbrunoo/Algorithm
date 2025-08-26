@@ -1,12 +1,13 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
 class Solution {    
 	
-	private static ArrayList<Integer>[] adj;
-	private static boolean[] connected;
+	private static int n;
+	private static int[] parent;
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,49 +18,53 @@ class Solution {
 		
 		for (int t = 1; t <= T; t++) {
 			st = new StringTokenizer(br.readLine());
-			int n = Integer.parseInt(st.nextToken());
+			n = Integer.parseInt(st.nextToken());
 			int m = Integer.parseInt(st.nextToken());
-			adj = new ArrayList[n + 1];
-			connected = new boolean[n + 1];
-			
-			for (int i = 1; i < n + 1; i++) {
-				adj[i] = new ArrayList<>();
-			}
+			makeSet();
 			
 			for (int i = 0; i < m; i++) {
 				st = new StringTokenizer(br.readLine());
 				int from = Integer.parseInt(st.nextToken());
 				int to = Integer.parseInt(st.nextToken());
 				
-				adj[from].add(to);
-				adj[to].add(from);
+				union(from, to);
 			}
 			
-			int ret = 0;
+			HashSet<Integer> set = new HashSet<>();
 			
 			for (int i = 1; i <= n; i++) {
-				if (connected[i]) continue;
-				
-				if (adj[i].isEmpty()) {
-					ret++;
-					continue;
-				}
-				dfs(i);
-				ret++;
+				set.add(findSet(i));
 			}
 			
-			sb.append("#").append(t).append(" ").append(ret).append("\n");
+			sb.append("#").append(t).append(" ").append(set.size()).append("\n");
 		}
 		
 		System.out.println(sb);
 	}
 	
-	private static void dfs(int start) {
-		connected[start] = true;
+	private static void makeSet() {
+		parent = new int[n + 1];
 		
-		for (int next : adj[start]) {
-			if (connected[next]) continue;
-			dfs(next);
+		for (int i = 1; i <= n; i++) {
+			parent[i] = i;
 		}
+	}
+	
+	private static int findSet(int a) {
+		if (parent[a] == a) return a;
+		
+		return parent[a] = findSet(parent[a]);
+	}
+	
+	private static boolean union(int a, int b) {
+		int rootA = findSet(a);
+		int rootB = findSet(b);
+		
+		if (rootA == rootB) {
+			return false;
+		}
+		
+		parent[rootB] = rootA;
+		return true;
 	}
 }
