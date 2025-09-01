@@ -1,38 +1,38 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-	static int N;
-	static int r, c;
+	static int N, r, c;
 	static int count;
-	static boolean more;
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		N = sc.nextInt();
-		r = sc.nextInt();
-		c = sc.nextInt();
-		sc.close();
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		r = Integer.parseInt(st.nextToken());
+		c = Integer.parseInt(st.nextToken());
 		count = 0;
-		more = true;
 		recursion((int) Math.pow(2, N), 0, 0);
 		System.out.println(count);
 	}
 
-	static void recursion(int n, int x, int y) {
-		if (n == 1)
+	static void recursion(int n, int i, int j) {
+		if (n == 1) {
 			return;
+		}
 		int half = n / 2;
-		if (r < x + half && c < y + half) {
-			recursion(half, x, y);
-		} else if (r < x + half && c >= y + half) {
+		if (r < i + half && c < j + half) {
+			recursion(half, i, j);
+		} else if (r < i + half && c >= j + half) {
 			count += half * half;
-			recursion(half, x, y + half);
-		} else if (r >= x + half && c < y + half) {
+			recursion(half, i, j + half);
+		} else if (r >= i + half && c < j + half) {
 			count += half * half * 2;
-			recursion(half, x + half, y);
+			recursion(half, i + half, j);
 		} else {
 			count += half * half * 3;
-			recursion(half, x + half, y + half);
+			recursion(half, i + half, j + half);
 		}
 	}
 }
