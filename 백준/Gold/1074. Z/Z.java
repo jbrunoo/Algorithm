@@ -3,36 +3,60 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int N, r, c;
-	static int count;
+
+	private static int n, r, c, ret;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
+
+		n = Integer.parseInt(st.nextToken());
 		r = Integer.parseInt(st.nextToken());
 		c = Integer.parseInt(st.nextToken());
-		count = 0;
-		recursion((int) Math.pow(2, N), 0, 0);
-		System.out.println(count);
+		ret = -1;
+
+		int len = getSize(n);
+
+		z(0, 0, 0, len);
+
+		System.out.println(ret);
 	}
 
-	static void recursion(int n, int i, int j) {
-		if (n == 1) {
+	// 한 변의 사이즈
+	private static int getSize(int n) {
+		int size = 1;
+		for (int i = 0; i < n; i++) {
+			size *= 2;
+		}
+		return size;
+	}
+
+	private static void z(int x, int y, int value, int len) {
+		int half = len / 2;
+		int v = half * half;
+
+		if (x == r && y == c) {
+			ret = value;
 			return;
 		}
-		int half = n / 2;
-		if (r < i + half && c < j + half) {
-			recursion(half, i, j);
-		} else if (r < i + half && c >= j + half) {
-			count += half * half;
-			recursion(half, i, j + half);
-		} else if (r >= i + half && c < j + half) {
-			count += half * half * 2;
-			recursion(half, i + half, j);
+
+		if (len == 1) return;
+
+		if (x + half - 1 >= r && y + half - 1 >= c) {
+			// 1사분면
+			z(x, y, value, half);			
+		} else if (x + half - 1 >= r && y + half <= c) {
+			// 2사분면
+			z(x, y + half, value + v, half);			
+		} else if (x + half <= r && y + half - 1 >= c) {
+			// 3사분면
+			z(x + half, y, value + v * 2, len / 2);			
 		} else {
-			count += half * half * 3;
-			recursion(half, i + half, j + half);
+			// 4사분면
+			z(x + half, y + half, value + v * 3, len / 2);
 		}
 	}
 }
+
+// 4사분면으로 분할 해가면서 탐색 
+// 좌상 우상 좌하 우하
