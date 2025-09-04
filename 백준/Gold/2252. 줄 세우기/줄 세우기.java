@@ -9,18 +9,8 @@ import java.util.StringTokenizer;
 
 public class Main {
 	
-	private static class Node {
-		int vertex;
-		Node link;
-		
-		public Node (int vertex, Node link) {
-			this.vertex = vertex;
-			this.link = link;
-		}
-	}
-	
 	private static int n, m;
-	private static Node[] adj;
+	private static ArrayList<Integer>[] adj;
 	private static int[] degree;
 	
 	public static void main(String[] args) throws Exception {
@@ -30,14 +20,18 @@ public class Main {
 
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
-		adj = new Node[n + 1];
+		adj = new ArrayList[n + 1];
 		degree = new int[n + 1];
+		
+		for (int i = 0; i < n + 1; i++) {
+			adj[i] = new ArrayList<>();
+		}
 		
 		for (int i = 0; i < m; i++) {
 			st = new StringTokenizer(br.readLine());
 			int from = Integer.parseInt(st.nextToken());
 			int to = Integer.parseInt(st.nextToken());
-			adj[from] = new Node(to, adj[from]);
+			adj[from].add(to);
 			degree[to]++;
 		}
 		
@@ -62,9 +56,10 @@ public class Main {
 			int student = q.poll();
 			orderList.add(student);
 			
-			for (Node temp = adj[student]; temp != null; temp = temp.link) {
-				if (--degree[temp.vertex] == 0) {
-					q.offer(temp.vertex);
+			for (int i = 0; i < adj[student].size(); i++) {
+				int next = adj[student].get(i);
+				if (--degree[next] == 0) {
+					q.offer(next);
 				}
 			}
 		}
