@@ -1,34 +1,28 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.StringTokenizer;
 
 public class Main {
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 		
 		String T = br.readLine();
 		String P = br.readLine();
-		
 		int lenT = T.length();
 		int lenP = P.length();
 		
-		int[] next = new int[lenP];
+		int[] pi = new int[lenP];
 		
-		int len = 0;
-		for (int i = 1; i < lenP; i++) {
-			while (len > 0 && P.charAt(len) != P.charAt(i)) {
-				len = next[len - 1];
+		for (int i = 1, j = 0; i < lenP; i++) {
+			while (j > 0 && P.charAt(i) != P.charAt(j)) {
+				j = pi[j - 1];
 			}
 			
-			if (P.charAt(len) == P.charAt(i)) {
-				next[i] = ++len;
-			} 
-//			else {
-//				next[i] = 0;
-//			}
+			if (P.charAt(i) == P.charAt(j)) {
+				pi[i] = ++j;
+			}
 		}
 		
 		int cnt = 0;
@@ -36,25 +30,28 @@ public class Main {
 		
 		for (int i = 0, j = 0; i < lenT; i++) {
 			while (j > 0 && T.charAt(i) != P.charAt(j)) {
-				j = next[j - 1];
+				j = pi[j - 1];
 			}
 			
 			if (T.charAt(i) == P.charAt(j)) {
 				if (j == lenP - 1) {
 					cnt++;
-					list.add(i - (lenP - 1));
-					j = next[j];
+					list.add(i - j);
+					
+					j = pi[j];
 				} else {
 					j++;
 				}
 			}
 		}
 		
-		System.out.println(cnt);
+		sb.append(cnt).append("\n");
 		if (cnt > 0) {
 			for (Integer i : list) {
-				System.out.print((i + 1) + " ");
+				sb.append(i + 1).append(" ");
 			}
 		}
+		
+		System.out.print(sb);
 	}
 }
