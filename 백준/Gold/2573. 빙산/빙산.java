@@ -47,23 +47,20 @@ public class Main {
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
 				if (sea[i][j] != 0) {
+					int water = 0;
 					for (int d = 0; d < 4; d++) {
 						int nx = i + dx[d];
 						int ny = j + dy[d];
 						
 						if (nx < 0 || ny < 0 || nx >= N || ny >= M) continue;
-						if (sea[nx][ny] == 0) melted[i][j]++;
+						if (sea[nx][ny] == 0) water++;
 					}
+					melted[i][j] = Math.max(0,  sea[i][j] - water);
 				}
 			}
 		}
 		
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				sea[i][j] -= melted[i][j];
-				if (sea[i][j] < 0) sea[i][j] = 0;
-			}
-		}
+		sea = melted;
 	}
 	
 	private static boolean[][] visited;
